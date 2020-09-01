@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class SortAsc {    
+public class Sorting {    
     public static void main(String[] args) {        
             
         //Input array 
