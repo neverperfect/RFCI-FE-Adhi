@@ -1,25 +1,44 @@
 import React, { Component } from "react";
-import { TextInput, Button, Image, StyleSheet, Text, View } from "react-native";
+import { TextInput, Button, StyleSheet, Text, View } from "react-native";
 
 class App extends Component {
     state= {
       myComment: '',
       output: '',
       undo: true,
+      value: '',
+      prevValue: '',
+      nextValue: '',
     };
 
     handleTextChange = (inputText) => {
-      this.setState({ myComment: inputText})
+      this.setState({ 
+        myComment: inputText,
+        value: inputText})
     }
     onPress = () => {
-      this.setState({ output: this.state.myComment})
+      this.setState({ 
+        output: this.state.myComment,
+        prevValue: this.state.value})
     };
 
     onUndo = () => {
+      if (this.state.undo === true) {
       this.setState( {
         undo: !this.state.undo,
+        nextValue: this.state.value,
+        value: this.state.prevValue,
       })
+      console.log("undo = true", this.state.nextValue, this.state.value)
+    } else {
+      this.setState( {
+        undo: !this.state.undo,
+        prevValue: this.state.value,
+        value: this.state.nextValue
+      })
+      console.log("undo = false", this.state.prevValue, this.state.value)
     }
+  }
 
   render() {
     return (
@@ -28,6 +47,7 @@ class App extends Component {
           style={styles.textinput}
           placeholder="Masukkan input"
           onChangeText={this.handleTextChange}
+          value={this.state.value}
           />
           <View style={styles.buttonContainer}>
             <Button
